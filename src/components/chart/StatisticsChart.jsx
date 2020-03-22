@@ -1,10 +1,13 @@
 import React from 'react';
 import ReactEcharts from 'echarts-for-react';
+import { commonConfig } from './commonConfig';
 
 const getOptions = statistics => {
   let data = {};
   let keys = [];
   let series = [];
+  let dataZoom = [];
+  
   for (let i = 0; i < statistics.length; i++) {
     const statistic = statistics[i];
     for (const key in statistic) {
@@ -23,27 +26,15 @@ const getOptions = statistics => {
     series.push({ type: 'line', name: key, data: data[key] });
   }
 
+  if(keys.length < 30) {
+    dataZoom = [{
+      disable: true
+    }]
+  }
+
   return {
-    legend: {
-      show: true
-    },
-    tooltip: {
-      show: true
-    },
-    xAxis: {
-      type: 'time'
-    },
-    yAxis: {
-      type: 'value',
-      axisLabel: {
-        formatter: value => {
-          if (value >= 1000) {
-            return `${value / 1000}k`;
-          }
-          return value;
-        }
-      }
-    },
+    ...commonConfig,
+    dataZoom,
     series
   };
 };

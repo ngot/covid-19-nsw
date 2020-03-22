@@ -38,10 +38,10 @@ const App = () => {
   if (SHOW_AUS_PAGE) navList.unshift('AUS');
   return (
     <Router>
-      <div className='ui container center aligned nav-wrapper'>
+      <div className='ui container center aligned navbar'>
         <List link horizontal>
           {navList.map(nav => (
-            <List.Item active={active === nav}>
+            <List.Item active={active === nav} key={nav}>
               <NavLink
                 exact
                 activeClassName='active'
@@ -56,7 +56,7 @@ const App = () => {
       </div>
       <Switch>
         {navList.map(id => (
-          <Route path={`${process.env.PUBLIC_URL}/${id}`}>
+          <Route path={`${process.env.PUBLIC_URL}/${id}`} key={id}>
             <Child id={id} />
           </Route>
         ))}

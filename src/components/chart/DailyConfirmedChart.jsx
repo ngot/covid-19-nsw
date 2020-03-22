@@ -1,36 +1,16 @@
 import React from 'react';
 import ReactEcharts from 'echarts-for-react';
+import { commonConfig } from './commonConfig';
 
-const getOptions = (dailyHistorys, predicts) => {
-  let todayData = dailyHistorys.map(({ date, todayNewNumber }) => [
-    new Date(date),
-    todayNewNumber
-  ]);
-  let totalData = dailyHistorys.map(({ date, totalConfirmedNumber }) => [
-    new Date(date),
-    totalConfirmedNumber
-  ]);
-  let predictData = predicts.map(({ date, predictedTotalConfirmedNumber }) => [
-    new Date(date),
-    predictedTotalConfirmedNumber
-  ]);
+const getTotalChartOptions = (totalData, predictData) => {
   return {
+    ...commonConfig,
     legend: {
       show: true,
       selected: {
         total: true,
-        'predicted total': false,
-        'new': true
+        'predicted total': false
       }
-    },
-    tooltip: {
-      show: true
-    },
-    xAxis: {
-      type: 'time'
-    },
-    yAxis: {
-      type: 'value'
     },
     series: [
       {
@@ -54,7 +34,13 @@ const getOptions = (dailyHistorys, predicts) => {
           normal: {
             label: {
               show: true,
-              position: 'right'
+              position: 'right',
+              formatter: ({value, dataIndex}) => {
+                if (dataIndex > predictData.length -4) {
+                  return value[2]
+                }
+                return ''
+              }
             },
             lineStyle: {
               width: 2,
@@ -62,10 +48,18 @@ const getOptions = (dailyHistorys, predicts) => {
             }
           }
         }
-      },
+      }
+    ]
+  };
+};
+
+const getTodayChartOptions = todayData => {
+  return {
+    ...commonConfig,
+    series: [
       {
         type: 'bar',
-        name: 'new',
+        name: 'new cases',
         data: todayData,
         itemStyle: {
           normal: {
@@ -80,8 +74,23 @@ const getOptions = (dailyHistorys, predicts) => {
   };
 };
 
-export const DailyConfirmedChart = ({ dailyHistorys, predicts }) => (
-  <>
-    <ReactEcharts option={getOptions(dailyHistorys, predicts)} />
-  </>
-);
+export const DailyConfirmedChart = ({ dailyHistorys, predicts }) => {
+  let todayData = dailyHistorys.map(({ date, todayNewNumber }) => [
+    new Date(date),
+    todayNewNumber
+  ]);
+  let totalData = dailyHistorys.map(({ date, totalConfirmedNumber }) => [
+    new Date(date),
+    totalConfirmedNumber
+  ]);
+  let predictData = predicts.map(({ date, predictedTotalConfirmedNumber }) => [
+    new Date(date),
+    predictedTotalConfirmedNumber
+  ]);
+  return (
+    <>
+      <ReactEcharts option={getTotalChartOptions(totalData, predictData)} />
+      <ReactEcharts option={getTodayChartOptions(todayData)} />
+    </>
+  );
+};

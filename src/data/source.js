@@ -1,5 +1,29 @@
 export const source = [
   {
+    Date: '2020-03-21',
+    overseas: 218,
+    'contact of confirmed case': 92,
+    'not identified': 52,
+    'under investigation': 74,
+    State: 'NSW'
+  },
+  {
+    Date: '2020-03-20',
+    overseas: 158,
+    'contact of confirmed case': 69,
+    'not identified': 52,
+    'under investigation': 74,
+    State: 'NSW'
+  },
+  {
+    Date: '2020-03-19',
+    overseas: 129,
+    'contact of confirmed case': 59,
+    'not identified': 46,
+    'under investigation': 73,
+    State: 'NSW'
+  },
+  {
     Date: '2020-03-18',
     overseas: 114,
     'contact of confirmed case': 63,

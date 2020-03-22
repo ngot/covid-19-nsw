@@ -59,3 +59,10 @@ footer {
   opacity: 0.85 !important;
   color: #ffffff !important;
 }
+.tab-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 150px;
+}

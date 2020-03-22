@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactEcharts from 'echarts-for-react';
 
-const getOptions = (dailyHistorys, predicts) => {
+const getOptions = (data) => {
   let todayData = dailyHistorys.map(({ date, todayNewNumber }) => [
     new Date(date),
     todayNewNumber
