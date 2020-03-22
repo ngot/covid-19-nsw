@@ -36,7 +36,7 @@ const getTotalChartOptions = (totalData, predictData) => {
               show: true,
               position: 'right',
               formatter: ({value, dataIndex}) => {
-                if (dataIndex > predictData.length -4) {
+                if (dataIndex > predictData.length - 11) {
                   return value[2]
                 }
                 return ''

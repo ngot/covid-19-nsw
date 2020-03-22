@@ -105,7 +105,7 @@ module.exports = function predict(dailyHistorys, stateName) {
   const lastIndex = count - 1;
   const lastDate = dailyHistorys[lastIndex].date;
 
-  // predict next 3 days
-  predictedData.push(...predictNext(count, lastDate, 3, params, mappedModel));
+  // predict next 10 days
+  predictedData.push(...predictNext(count, lastDate, 10, params, mappedModel));
   return predictedData;
 };

@@ -34,6 +34,9 @@ const getOptions = statistics => {
 
   return {
     ...commonConfig,
+    legend: {
+      show: true
+    },
     dataZoom,
     series
   };
