@@ -1,5 +1,6 @@
 import React from 'react';
 import { Grid, Statistic, Table, List } from 'semantic-ui-react';
+import { TOGGLES, getToggle } from '../../toggles.js';
 import './index.scss';
 
 const SOURCE_BY_STATE = {
@@ -16,9 +17,16 @@ const SOURCE_BY_STATE = {
     'https://www.health.act.gov.au/public-health-alert/updated-information-about-covid-19'
 };
 
-const FLIGHTS_BY_STATE = {
-  NSW:
-    'https://www.health.nsw.gov.au/Infectious/diseases/Pages/coronavirus-flights.aspx',
+const CONTACT_BY_STATE = {
+  NSW: {
+    title: 'NSW - Known flights with confirmed cases',
+    url:
+      'https://www.health.nsw.gov.au/Infectious/diseases/Pages/coronavirus-flights.aspx'
+  },
+  NT: {
+    title: 'NT - Contact tracing',
+    url: 'https://coronavirus.nt.gov.au/home/homepage-news/contact-tracing'
+  }
 };
 
 export const Summary = ({ id, todaySummarys, statistics }) => {
@@ -51,13 +59,15 @@ export const Summary = ({ id, todaySummarys, statistics }) => {
         <Grid.Column>
           <Statistic color='grey' label='Death' value={totalDeathNumber} />
         </Grid.Column>
-        <Grid.Column>
-          <Statistic
-            color='green'
-            label='Recovered'
-            value={totalRecoveredNumber}
-          />
-        </Grid.Column>
+        {getToggle(TOGGLES.HIDE_RECOVERED) && (
+          <Grid.Column>
+            <Statistic
+              color='green'
+              label='Recovered'
+              value={totalRecoveredNumber}
+            />
+          </Grid.Column>
+        )}
       </Grid>
       <Table unstackable compact>
         <Table.Body>
@@ -102,31 +112,31 @@ export const Summary = ({ id, todaySummarys, statistics }) => {
             {id} Health
           </a>
         </List.Item>
-        {FLIGHTS_BY_STATE[id] && (
+        {CONTACT_BY_STATE[id] && (
           <List.Item>
             <a
-              href={FLIGHTS_BY_STATE[id]}
+              href={CONTACT_BY_STATE[id].url}
               target='_blank'
               rel='noopener noreferrer'
             >
-              {id} - Known flights with confirmed cases
+              {CONTACT_BY_STATE[id].title || <>{id} - </>}
             </a>
           </List.Item>
         )}
-        
-          {otherStateNumber.all !== 0 && (
-            <List.Item>
-              <strong className='ui small'>
-                * {otherStateNumber.all}{' '}
-                {otherStateNumber.all === 1 ? (
-                  <>case is other state's resident</>
-                ) : (
-                  <>cases are other state's residents</>
-                )}
-                , count in their number in national data.
-              </strong>
-              </List.Item>
-          )}       
+
+        {otherStateNumber.all !== 0 && (
+          <List.Item>
+            <strong className='ui small'>
+              * {otherStateNumber.all}{' '}
+              {otherStateNumber.all === 1 ? (
+                <>case is other state's resident</>
+              ) : (
+                <>cases are other state's residents</>
+              )}
+              , count in their number in national data.
+            </strong>
+          </List.Item>
+        )}
       </List>
     </div>
   );
