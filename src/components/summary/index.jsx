@@ -24,8 +24,10 @@ const CONTACT_BY_STATE = {
       'https://www.health.nsw.gov.au/Infectious/diseases/Pages/coronavirus-flights.aspx'
   },
   NT: {
-    title: 'NT - Contact tracing',
     url: 'https://coronavirus.nt.gov.au/home/homepage-news/contact-tracing'
+  },
+  QLD: {
+    url: 'https://www.qld.gov.au/health/conditions/health-alerts/coronavirus-covid-19/current-status/current-status-and-contact-tracing-alerts'
   }
 };
 
@@ -119,7 +121,7 @@ export const Summary = ({ id, todaySummarys, statistics }) => {
               target='_blank'
               rel='noopener noreferrer'
             >
-              {CONTACT_BY_STATE[id].title || <>{id} - </>}
+              {CONTACT_BY_STATE[id].title || <>{id} - Contact tracing</>}
             </a>
           </List.Item>
         )}
